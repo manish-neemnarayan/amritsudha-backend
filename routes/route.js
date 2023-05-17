@@ -10,7 +10,9 @@ const {isMember} = require("../middleware/auth");
 const Router = express.Router();
 
 
-
+Router.get('/health', (req, res) => {
+    res.status(200).json({ status: 'OK' });
+  });
 // authentication routes
 Router.post("/api/auth/signup", isLoggedIn, isAdmin, signup);
 Router.post("/api/auth/login", login);
