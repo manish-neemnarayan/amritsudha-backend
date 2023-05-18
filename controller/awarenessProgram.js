@@ -125,7 +125,6 @@ exports.getAllProgram = asyncHandler(async (_req, res) => {
         const programs = await AwarenessProgram.find();
     
         if(!programs) throw new CustomError("programs are not found", 400);
-    
         res.status(200).json({
             success: true,
             programs

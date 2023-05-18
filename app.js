@@ -15,6 +15,13 @@ app.use(cors({
     origin: 'https://amritsudha-frontend.vercel.app',
     credentials: true
 }));
+// Enable CORS
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*'); // Allow requests from all origins
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE'); // Allow the specified HTTP methods
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    next();
+  });
 app.use(morgan('tiny'));
 app.use(router);
 
