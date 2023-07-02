@@ -7,7 +7,7 @@ const mailHelper = require("../util/mailHelper");
 // cookie options
 const cookieOptions = {
     expiresIn: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000 ),
-    httpOnly: true,
+    httpOnly: false,
 }
 
 // ROUTES
