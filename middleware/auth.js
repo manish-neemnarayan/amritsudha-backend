@@ -11,12 +11,13 @@ exports.isLoggedIn = asyncHandler(async (req, _res, next) => {
       (req.headers.authorization && req.headers.authorization.startsWith("Bearer")))
       {
         token = req.cookies.Token || req.headers.authorization.split(" ")[1];
+        console.log(token);
+   
+      } else {
+        throw new CustomError("You are not authorized", 401);
       }
       
-      console.log(token);
-    if(!token) {
-        throw new CustomError("You are not authorized", 401);
-    }
+
 
     try {
         const decodedJWTPayload = JWT.verify(token, config.JWT_SECRET);

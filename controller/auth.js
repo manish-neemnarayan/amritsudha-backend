@@ -73,41 +73,41 @@ exports.signup = asyncHandler(async (req, res) => {
 ******************************************************************************/
 
 exports.login = asyncHandler(async (req, res) => {
-    // getting data from body or frontend
-    const {email, password} = req.body;
+   // getting data from body or frontend
+   const {email, password} = req.body;
+   // checking if data is specified in fields
+   if(!email && !password) {
+       throw new CustomError("Fill all the fields properly", 400)
+   }
 
-    // checking if data is specified in fields
-    if(!email && !password) {
-        throw new CustomError("Fill all the fields properly", 400)
-    }
+   // check if user exist
+   const user = await User.findOne({email});
+   if(!user) {
+       res.clearCookie("Token")
+       
+       throw new CustomError("You are not Registered", 401); 
+   }
+   // compare passwords
+   const matchedPasswords = await user.comparePassword(password);
 
-    // check if user exist
-    const user = await User.findOne({email});
-    if(!user) {
-        res.clearCookie("Token")
-        
-        throw new CustomError("You are not Registered", 401); 
-    }
-    // compare passwords
-    const matchedPasswords = await user.comparePassword(password);
+   // passwords are not matched
+   if(!matchedPasswords) {
+       res.clearCookie("Token")
 
-    // passwords are not matched
-    if(!matchedPasswords) {
-        res.clearCookie("Token")
-
-        throw new CustomError("Credentials are not matched, Try Again :(", 402)
-    };
+       throw new CustomError("Credentials are not matched, Try Again :(", 402)
+   };
 
 
-    if(matchedPasswords) {
-        const token = await user.getJwtToken().then(res => res);
-        user.password = undefined;
-        user.token = undefined;
-        res.cookie("Token", token, cookieOptions).status(200).json({
-            success: true,
-            user
-        });
-    }
+   if(matchedPasswords) {
+       const token = await user.getJwtToken();
+       user.password = undefined;
+    //    user.token = undefined;
+       res.cookie("Token", token, cookieOptions)
+       res.status(200).json({
+           success: true,
+           user
+       });
+   }
 
 })
 
