@@ -10,7 +10,7 @@ const cookieOptions = {
         httpOnly: true,
         sameSite: 'None',
         secure: true,
-        domain: '.onrender.com',
+        domain: 'https://amritsudha-backend-server123.onrender.com',
         path: '/',
         expires: new Date(Date.now() + 8 * 3600000) // cookie will expire in 8 hours
 }
