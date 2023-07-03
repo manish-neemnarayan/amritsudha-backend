@@ -10,7 +10,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(cors({
-  origin: "http://localhost:3000", // Replace with the actual origin of your React application
+  origin: "https://amritsudha-frontend.vercel.app", // Replace with the actual origin of your React application
   credentials: true // Allow including credentials (cookies)
 }));
 // app.use(cors());
