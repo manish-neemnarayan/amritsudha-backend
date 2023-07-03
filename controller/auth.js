@@ -7,7 +7,7 @@ const mailHelper = require("../util/mailHelper");
 // cookie options
 const cookieOptions = {
     // expiresIn: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000 ),
-        httpOnly: false,
+        httpOnly: true,
         sameSite: 'None',
         secure: true,
         domain: '.onrender.com',
