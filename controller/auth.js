@@ -9,7 +9,8 @@ const cookieOptions = {
     // expiresIn: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000 ),
         httpOnly: true,
         sameSite: 'None',
-        domain: 'http://localhost:3000',
+        secure: false,
+        domain: '.onrender.com',
         path: '/',
         expires: new Date(Date.now() + 8 * 3600000) // cookie will expire in 8 hours
 }
