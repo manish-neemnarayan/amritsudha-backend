@@ -8,7 +8,7 @@ const mailHelper = require("../util/mailHelper");
 const cookieOptions = {
     // expiresIn: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000 ),
         httpOnly: true,
-        sameSite: 'None',
+        sameSite: 'none',
         secure: true,
         domain: 'https://amritsudha-backend-server123.onrender.com',
         path: '/',
