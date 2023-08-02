@@ -18,7 +18,6 @@ app.use(cors({
 app.use(cookieParser());
 app.use(morgan('tiny'));
 app.use(router);
-
 // Enable CORS
 app.use((_req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
@@ -26,6 +25,13 @@ app.use((_req, res, next) => {
   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
   next();
 });
+
+const setupSwaggerDocs = require('./swagger');
+
+// Call the function passing the Express app as an argument
+setupSwaggerDocs(app);
+
+
 
 
 module.exports = app;
