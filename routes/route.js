@@ -1,18 +1,41 @@
-const express = require("express")
-const {signup, login, logout, getAllUser, deleteUser, updateUser, getUser} = require("../controller/auth");
-const {uploadImage, deleteImage, getImages}  = require("../controller/gallery");
-const { createNotice, updateNotice, getNotice, getAllNotice, deleteNotice } = require("../controller/notice");
-const { createProgram, updateProgram, getProgram, getAllProgram, deleteProgram } = require("../controller/awarenessProgram")
+const express = require("express");
+const {
+  signup,
+  login,
+  logout,
+  getAllUser,
+  deleteUser,
+  updateUser,
+  getUser,
+} = require("../controller/auth");
+const {
+  uploadImage,
+  deleteImage,
+  getImages,
+} = require("../controller/gallery");
+const {
+  createNotice,
+  updateNotice,
+  getNotice,
+  getAllNotice,
+  deleteNotice,
+} = require("../controller/notice");
+const {
+  createProgram,
+  updateProgram,
+  getProgram,
+  getAllProgram,
+  deleteProgram,
+} = require("../controller/awarenessProgram");
 const upload = require("../util/multer");
-const {isLoggedIn} = require("../middleware/auth");
-const {isAdmin} = require("../middleware/auth");
-const {isMember} = require("../middleware/auth");
+const { isLoggedIn } = require("../middleware/auth");
+const { isAdmin } = require("../middleware/auth");
+const { isMember } = require("../middleware/auth");
 const Router = express.Router();
 
-
-Router.get('/health', (_req, res) => {
-    res.status(200).json({ status: 'OK' });
-  });
+Router.get("/health", (_req, res) => {
+  res.status(200).json({ status: "OK" });
+});
 // authentication routes
 
 /**
@@ -28,7 +51,12 @@ Router.get('/health', (_req, res) => {
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/model/authSchema'
+ *                 $ref: '#/components/schemas/User'
+ * 
+ * components:
+ *   schemas:
+ *     User: User
+ *       $ref: './model/authSchema.js' 
  */
 Router.post("/api/auth/signup", isLoggedIn, isAdmin, signup);
 
@@ -45,7 +73,12 @@ Router.post("/api/auth/signup", isLoggedIn, isAdmin, signup);
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/model/authSchema'
+ *                 $ref: '#/components/schemas/User'
+ * 
+ * components:
+ *   schemas:
+ *     User: User
+ *       $ref: './model/authSchema.js' 
  */
 Router.post("/api/auth/login", login);
 
@@ -56,15 +89,20 @@ Router.post("/api/auth/login", login);
  *     description: to logout user
  *     responses:
  *       200:
- *         description: clearing cookies 
+ *         description: clearing cookies
  *         content:
  *           application/json:
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/model/authSchema'
+ *                 $ref: '#/components/schemas/User'
+ * 
+ * components:
+ *   schemas:
+ *     User: User
+ *       $ref: './model/authSchema.js' 
  */
-Router.post("/api/auth/logout",isLoggedIn, logout);
+Router.post("/api/auth/logout", isLoggedIn, logout);
 
 /**
  * @swagger
@@ -79,7 +117,12 @@ Router.post("/api/auth/logout",isLoggedIn, logout);
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/model/authSchema'
+ *                 $ref: '#/components/schemas/User'
+ * 
+ * components:
+ *   schemas:
+ *     User: User
+ *       $ref: './model/authSchema.js' 
  */
 Router.put("/api/auth/user/update/:userId", isLoggedIn, isAdmin, updateUser);
 
@@ -96,7 +139,12 @@ Router.put("/api/auth/user/update/:userId", isLoggedIn, isAdmin, updateUser);
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/model/authSchema'
+ *                 $ref: '#/components/schemas/User'
+ * 
+ * components:
+ *   schemas:
+ *     User: User
+ *       $ref: './model/authSchema.js' 
  */
 Router.get("/api/auth/getAllUser", isLoggedIn, isMember, getAllUser);
 
@@ -113,7 +161,12 @@ Router.get("/api/auth/getAllUser", isLoggedIn, isMember, getAllUser);
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/model/authSchema'
+ *                 $ref: '#/components/schemas/User'
+ * 
+ * components:
+ *   schemas:
+ *     User: User
+ *       $ref: './model/authSchema.js' 
  */
 Router.get("/api/auth/getUser/:userId", isLoggedIn, isMember, getUser);
 
@@ -130,10 +183,14 @@ Router.get("/api/auth/getUser/:userId", isLoggedIn, isMember, getUser);
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/model/authSchema'
+ *                 $ref: '#/components/schemas/User'
+ * 
+ * components:
+ *   schemas:
+ *     User: User
+ *       $ref: './model/authSchema.js' 
  */
 Router.delete("/api/auth/user/delete/:userId", isLoggedIn, isAdmin, deleteUser);
-
 
 // gallery routes
 
@@ -150,9 +207,20 @@ Router.delete("/api/auth/user/delete/:userId", isLoggedIn, isAdmin, deleteUser);
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/model/gallerySchema'
+ *                 $ref: '#/components/schemas/User'
+ * 
+ * components:
+ *   schemas:
+ *     User: Gallery
+ *       $ref: './model/gallerySchema.js' 
  */
-Router.post("/api/image/upload", isLoggedIn, isAdmin, upload.single("image"), uploadImage)
+Router.post(
+  "/api/image/upload",
+  isLoggedIn,
+  isAdmin,
+  upload.single("image"),
+  uploadImage
+);
 
 /**
  * @swagger
@@ -167,7 +235,12 @@ Router.post("/api/image/upload", isLoggedIn, isAdmin, upload.single("image"), up
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/model/gallerySchema'
+ *                 $ref: '#/components/schemas/User'
+ * 
+ * components:
+ *   schemas:
+ *     User: Gallery
+ *       $ref: './model/gallerySchema.js' 
  */
 Router.delete("/api/image/delete/:image_id", isLoggedIn, isAdmin, deleteImage);
 
@@ -184,10 +257,14 @@ Router.delete("/api/image/delete/:image_id", isLoggedIn, isAdmin, deleteImage);
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/model/gallerySchema'
+ *                 $ref: '#/components/schemas/User'
+ * 
+ * components:
+ *   schemas:
+ *     User: Gallery
+ *       $ref: './model/gallerySchema.js' 
  */
 Router.get("/api/image/getAllImages", getImages);
-
 
 // notice routes
 
@@ -198,13 +275,18 @@ Router.get("/api/image/getAllImages", getImages);
  *     description:create a new notice and return created notice
  *     responses:
  *       200:
- *         description: user should be admin 
+ *         description: user should be admin
  *         content:
  *           application/json:
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/model/noticeSchema'
+ *                 $ref: '#/components/schemas/User'
+ * 
+ * components:
+ *   schemas:
+ *     User: Notice
+ *       $ref: './model/noticeSchema.js' 
  */
 Router.post("/api/notice/create", isLoggedIn, isAdmin, createNotice);
 
@@ -215,13 +297,18 @@ Router.post("/api/notice/create", isLoggedIn, isAdmin, createNotice);
  *     description: update a notice in database
  *     responses:
  *       200:
- *         description: user should be admin 
+ *         description: user should be admin
  *         content:
  *           application/json:
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/model/noticeSchema'
+ *                 $ref: '#/components/schemas/User'
+ * 
+ * components:
+ *   schemas:
+ *     User: Notice
+ *       $ref: './model/noticeSchema.js' 
  */
 Router.put("/api/notice/update/:noticeId", isLoggedIn, isAdmin, updateNotice);
 
@@ -238,7 +325,12 @@ Router.put("/api/notice/update/:noticeId", isLoggedIn, isAdmin, updateNotice);
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/model/noticeSchema'
+ *                 $ref: '#/components/schemas/User'
+ * 
+ * components:
+ *   schemas:
+ *     User: Notice
+ *       $ref: './model/noticeSchema.js' 
  */
 Router.get("/api/notice/get/:noticeId", isLoggedIn, isAdmin, getNotice);
 
@@ -255,7 +347,12 @@ Router.get("/api/notice/get/:noticeId", isLoggedIn, isAdmin, getNotice);
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/model/noticeSchema'
+ *                 $ref: '#/components/schemas/User'
+ * 
+ * components:
+ *   schemas:
+ *     User: Notice
+ *       $ref: './model/noticeSchema.js' 
  */
 Router.get("/api/notice/getAll", isLoggedIn, isMember, getAllNotice);
 
@@ -266,15 +363,25 @@ Router.get("/api/notice/getAll", isLoggedIn, isMember, getAllNotice);
  *     description: delete a notice from database
  *     responses:
  *       200:
- *         description: 
+ *         description:
  *         content:
  *           application/json:
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/model/noticeSchema'
+ *                 $ref: '#/components/schemas/User'
+ * 
+ * components:
+ *   schemas:
+ *     User: Notice
+ *       $ref: './model/noticeSchema.js' 
  */
-Router.delete("/api/notice/delete/:noticeId", isLoggedIn, isAdmin, deleteNotice);
+Router.delete(
+  "/api/notice/delete/:noticeId",
+  isLoggedIn,
+  isAdmin,
+  deleteNotice
+);
 
 // program routes
 
@@ -282,16 +389,21 @@ Router.delete("/api/notice/delete/:noticeId", isLoggedIn, isAdmin, deleteNotice)
  * @swagger
  * /api/program/create:
  *   post:
- *     description: create a new program 
+ *     description: create a new program
  *     responses:
  *       200:
- *         description: 
+ *         description:
  *         content:
  *           application/json:
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/model/awarenessProgramSchema'
+ *                 $ref: '#/components/schemas/User'
+ * 
+ * components:
+ *   schemas:
+ *     User: AwarenessProgram
+ *       $ref: './model/awarenessProgramSchema.js' 
  */
 Router.post("/api/program/create", isLoggedIn, isAdmin, createProgram);
 
@@ -299,7 +411,7 @@ Router.post("/api/program/create", isLoggedIn, isAdmin, createProgram);
  * @swagger
  * /api/program/update/:programId:
  *   put:
- *     description: update an existing program 
+ *     description: update an existing program
  *     responses:
  *       200:
  *         description: return updated notice
@@ -308,15 +420,25 @@ Router.post("/api/program/create", isLoggedIn, isAdmin, createProgram);
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/model/awarenessProgramSchema'
+ *                 $ref: '#/components/schemas/User'
+ * 
+ * components:
+ *   schemas:
+ *     User: AwarenessProgram
+ *       $ref: './model/awarenessProgramSchema.js' 
  */
-Router.put("/api/program/update/:programId", isLoggedIn, isAdmin, updateProgram);
+Router.put(
+  "/api/program/update/:programId",
+  isLoggedIn,
+  isAdmin,
+  updateProgram
+);
 
 /**
  * @swagger
  * /api/program/get/:programId
  *   get:
- *     description: get an existing program 
+ *     description: get an existing program
  *     responses:
  *       200:
  *         description: return retreived notice
@@ -325,7 +447,12 @@ Router.put("/api/program/update/:programId", isLoggedIn, isAdmin, updateProgram)
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/model/awarenessProgramSchema'
+ *                 $ref: '#/components/schemas/User'
+ * 
+ * components:
+ *   schemas:
+ *     User: AwarenessProgram
+ *       $ref: './model/awarenessProgramSchema.js' 
  */
 Router.get("/api/program/get/:programId", isLoggedIn, isAdmin, getProgram);
 
@@ -333,7 +460,7 @@ Router.get("/api/program/get/:programId", isLoggedIn, isAdmin, getProgram);
  * @swagger
  * /api/program/getAll
  *   get:
- *     description: get an existing program 
+ *     description: get an existing program
  *     responses:
  *       200:
  *         description: return retreived notices
@@ -342,7 +469,12 @@ Router.get("/api/program/get/:programId", isLoggedIn, isAdmin, getProgram);
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/model/awarenessProgramSchema'
+ *                 $ref: '#/components/schemas/User'
+ * 
+ * components:
+ *   schemas:
+ *     User: AwarenessProgram
+ *       $ref: './model/awarenessProgramSchema.js' 
  */
 Router.get("/api/program/getAll", getAllProgram);
 
@@ -350,7 +482,7 @@ Router.get("/api/program/getAll", getAllProgram);
  * @swagger
  * /api/program/delete/:programId
  *   delete:
- *     description: delete an existing program 
+ *     description: delete an existing program
  *     responses:
  *       200:
  *         description: return deleted notice
@@ -359,8 +491,18 @@ Router.get("/api/program/getAll", getAllProgram);
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/model/awarenessProgramSchema'
+ *                 $ref: '#/components/schemas/User'
+ * 
+ * components:
+ *   schemas:
+ *     User: AwarenessProgram
+ *       $ref: './model/awarenessProgramSchema.js' 
  */
-Router.delete("/api/program/delete/:programId", isLoggedIn, isAdmin, deleteProgram);
+Router.delete(
+  "/api/program/delete/:programId",
+  isLoggedIn,
+  isAdmin,
+  deleteProgram
+);
 
 module.exports = Router;
