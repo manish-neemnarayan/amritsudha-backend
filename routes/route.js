@@ -39,7 +39,7 @@ Router.post("/api/auth/signup", isLoggedIn, isAdmin, signup);
  *     description: to login a user and return user object
  *     responses:
  *       200:
- *         description: success: true, user
+ *         description: success- true, user
  *         content:
  *           application/json:
  *             schema:
@@ -348,7 +348,7 @@ Router.get("/api/program/getAll", getAllProgram);
 
 /**
  * @swagger
- * /api/program/getAll
+ * /api/program/delete/:programId
  *   delete:
  *     description: delete an existing program 
  *     responses:
