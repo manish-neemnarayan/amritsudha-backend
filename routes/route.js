@@ -72,9 +72,9 @@ Router.post("/api/auth/signup", isLoggedIn, isAdmin, signup);
  *           required: 
  *            - email
  *            - password
- *    responses:
- *      '200':
- *        description: success- true, user
+ *            responses:
+ *              200:
+ *              description: logged in user successfully
  */
 Router.post("/api/auth/login", login);
 
