@@ -53,10 +53,28 @@ Router.post("/api/auth/signup", isLoggedIn, isAdmin, signup);
  * @swagger
  * /api/auth/login:
  *   post:
- *     description: to login a user and return user object
- *     responses:
- *       200:
- *         description: success- true, user
+ *     description: Login a user and return user object
+ *      requestBody: 
+ *        required: true
+ *      content: 
+ *        application/json:
+ *          schema:
+ *            type: object
+ *            properties:
+ *              email:
+ *                type: string
+ *                format: email
+ *                description: The email of the user
+ *              password: 
+ *                type: string
+ *                format: password
+ *                description: The password of the user
+ *           required: 
+ *            - email
+ *            - password
+ *    responses:
+ *      '200':
+ *        description: success- true, user
  */
 Router.post("/api/auth/login", login);
 
