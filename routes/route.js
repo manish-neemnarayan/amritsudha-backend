@@ -71,7 +71,7 @@ Router.post("/api/auth/signup", isLoggedIn, isAdmin, signup);
  *      properties:   
  *        email: 
  *          type: string
- *          example: admin@gmai.com
+ *          example: admin123@gmai.com
  *        password: 
  *          type: string
  *          example: 'admin123'
