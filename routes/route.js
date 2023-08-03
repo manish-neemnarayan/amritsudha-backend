@@ -46,53 +46,36 @@ Router.get("/health", (_req, res) => {
  *     responses:
  *       200:
  *         description: created user
+
  */
 Router.post("/api/auth/signup", isLoggedIn, isAdmin, signup);
 
 /**
-  @swagger
-  /api/auth/login:
-    post:
-      description: Login a user and return user object
-       requestBody: 
-         required: true
-     operationId: loginUser
-      parameters:
-        - name: username
-          in: query
-          description: The user name for login
-          required: true
-          schema:
-            type: string
-        - name: password
-          in: query
-          description: The password for login in clear text
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: successful operation
-          headers:
-            X-Rate-Limit:
-              description: calls per hour allowed by the user
-              schema:
-                type: integer
-                format: int32
-            X-Expires-After:
-              description: date in UTC when token expires
-              schema:
-                type: string
-                format: date-time
-          content:
-            application/xml:
-              schema:
-                type: string
-            application/json:
-              schema:
-                type: string
-        '400':
-          description: Invalid username/password supplied */
+ * @swagger
+ * /api/auth/login:
+ *   post:
+ *     description: to login a user and return user object
+ *     requestBody:
+ *        description: Login user
+ *        content: 
+ *          application/json:
+ *            schema: 
+ *              $ref: '#/components/schemas/User'
+ *     responses:
+ *       200:
+ *         description: success- true, user
+ * components: 
+ *  schemas: 
+ *    User: 
+ *      type: object
+ *      properties:   
+ *        email: 
+ *          type: string
+ *          example: admin@gmai.com
+ *        password: 
+ *          type: string
+ *          example: 'admin123'
+ */
 Router.post("/api/auth/login", login);
 
 /**
