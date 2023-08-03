@@ -50,32 +50,49 @@ Router.get("/health", (_req, res) => {
 Router.post("/api/auth/signup", isLoggedIn, isAdmin, signup);
 
 /**
- * @swagger
- * /api/auth/login:
- *   post:
- *     description: Login a user and return user object
- *      requestBody: 
- *        required: true
- *      content: 
- *        application/json:
- *          schema:
- *            type: object
- *            properties:
- *              email:
- *                type: string
- *                format: email
- *                description: The email of the user
- *              password: 
- *                type: string
- *                format: password
- *                description: The password of the user
- *           required: 
- *            - email
- *            - password
- *            responses:
- *              200:
- *              description: logged in user successfully
- */
+  @swagger
+  /api/auth/login:
+    post:
+      description: Login a user and return user object
+       requestBody: 
+         required: true
+     operationId: loginUser
+      parameters:
+        - name: username
+          in: query
+          description: The user name for login
+          required: true
+          schema:
+            type: string
+        - name: password
+          in: query
+          description: The password for login in clear text
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          headers:
+            X-Rate-Limit:
+              description: calls per hour allowed by the user
+              schema:
+                type: integer
+                format: int32
+            X-Expires-After:
+              description: date in UTC when token expires
+              schema:
+                type: string
+                format: date-time
+          content:
+            application/xml:
+              schema:
+                type: string
+            application/json:
+              schema:
+                type: string
+        '400':
+          description: Invalid username/password supplied */
 Router.post("/api/auth/login", login);
 
 /**
