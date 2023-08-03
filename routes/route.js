@@ -80,23 +80,42 @@ Router.post("/api/auth/login", login);
 
 /**
  * @swagger
- * /api/auth/logout:
- *   post:
- *     description: to logout user
- *     responses:
- *       200:
- *         description: clearing cookies
- */
-Router.post("/api/auth/logout", isLoggedIn, logout);
-
-/**
- * @swagger
  * /api/auth/user/update/:userId:
  *   put:
- *     description: Update the user into the database
+ *     description: to update a user and return updated user object
+ *     requestBody:
+ *        description: update user
+ *        parameters:
+ *         - userId: userId
+ *           in: path
+ *           description: 'The name that needs to be fetched. Use user1 for testing. '
+ *           required: true
+ *           schema:
+ *            type: string
+ *        content: 
+ *          application/json:
+ *            schema: 
+ *              $ref: '#/components/schemas/User'
  *     responses:
  *       200:
- *         description: return updated user
+ *         description: success- true, user
+ * components: 
+ *  schemas: 
+ *    User: 
+ *      type: object
+ *      properties:  
+ *        userName: 
+ *          type: string
+ *          example: 'somethingnew'
+ *        email: 
+ *          type: string
+ *          example: admin123@gmai.com
+ *        password: 
+ *          type: string
+ *          example: 'admin123'
+ *        role: 
+ *          type: string
+ *          example: ADMIN
  */
 Router.put("/api/auth/user/update/:userId", isLoggedIn, isAdmin, updateUser);
 
